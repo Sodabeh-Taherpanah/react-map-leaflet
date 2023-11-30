@@ -11,10 +11,9 @@ export const Home = () => {
     let path = `/modal`;
     navigate(path);
   };
-  const [activityOptions, setactivityOptions] = useState<string[]>([]);
 
   const [key, setKey] = useState("products");
-  const location = useLocation();
+
   const { loading, error } = useRequestProduct();
   const ProductData = useSelector((state: any) => state.product.listProduct);
   const categories = useSelector(getCategories);
@@ -29,7 +28,6 @@ export const Home = () => {
 
   const Item = ({ key, category }: { category: any; key: string }) => {
     function onSelfClick() {
-      // onClick(category);
       setProduct(
         ProductData.filter(
           (e: any) => e.category.name === category || category === "All"

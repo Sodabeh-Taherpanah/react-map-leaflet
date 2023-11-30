@@ -17,3 +17,10 @@ export type ObjImag = {
   [id: number]: string;
 };
 
+export type ObjProduct = {
+  id: Key;
+  name: string;
+  image: ObjImag;
+  price:number;
+  
+};

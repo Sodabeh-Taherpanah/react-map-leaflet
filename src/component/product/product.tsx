@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import "./directory.styles.css";
-
 import Item from "../productItem/Item";
+
+import "./directory.styles.css";
 
 import { DirectoryCategory } from "../../utils/common.type";
 

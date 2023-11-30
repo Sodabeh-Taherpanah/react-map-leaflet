@@ -1,22 +1,13 @@
-import React, {
-  createContext,
-  useContext,
-  useRef,
-  useEffect,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
+
 export const SocketContext = React.createContext();
 const socket = io("ws://localhost:8080/", {});
 
 export const SocketProvider = ({ children }) => {
   const [isConnected, setConnected] = useState(false);
   const [lastMessage, setLastMessage] = useState(null);
-
-  const handleOnMessage = (message) => {
-    console.log(message);
-    // store.dispatch here
-  };
+  let interval;
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -26,12 +17,20 @@ export const SocketProvider = ({ children }) => {
       setConnected(false);
     });
     socket.on("message", (data) => {
-      setLastMessage(data);
+      //start taking message from server , that indicate status of product
+      interval = setInterval(
+        () =>
+          setLastMessage((prev) => {
+            if (prev !== data) return data;
+          }),
+        30000
+      );
     });
     return () => {
       socket.off("connect");
       socket.off("disconnect");
       socket.off("message");
+      if (interval) clearInterval(interval);
     };
   }, []);
 

@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import styles from "./location-button.module.css";
+import { useDispatch } from "react-redux";
+import {
+  MapContainer,
+  TileLayer,
+  useMap,
+  Marker,
+  Popup,
+  Circle,
+} from "react-leaflet";
 import L from "leaflet";
 import tileLayer from "../../utils/tileLayer";
+import { setAddress } from "../../store/user/user.reducer";
 
+import styles from "./location-button.module.css";
 const center = [52.22977, 21.01178];
 
 const LocationButton = () => {
@@ -150,8 +159,66 @@ const LocationButton = () => {
   return null;
 };
 
-const MapWrapper = () => {
+const MapWrapper = (user) => {
   const [map, setMap] = useState(null);
+  const dispatch = useDispatch();
+
+  const Location = () => {
+    const map = useMap();
+    const [position, setPosition] = useState(center);
+    const [draggable, setDraggable] = useState(false);
+
+    useEffect(() => {
+      map.locate({
+        setView: true,
+      });
+      map.on("locationfound", async (event) => {
+        setPosition(event.latlng);
+        fetch(
+          `${process.env.REACT_APP_ADDRESS}reverse?format=jsonv2&lat=${event.latlng.lat}&lon=${event.latlng.lng}&zoom=16`
+        )
+          .then((response) => response.json())
+          .then((responseJson) => {
+            if (responseJson) {
+              console.log("responseJson", responseJson);
+              dispatch(setAddress(responseJson?.display_name));
+            } else {
+              console.log("not found", user);
+            }
+          })
+          .catch((error) => {
+            console.log("somthing wrong", error);
+          });
+      });
+    }, [map]);
+
+    return position ? (
+      <>
+        <Circle
+          center={position}
+          weight={2}
+          color={"red"}
+          fillColor={"red"}
+          fillOpacity={0.1}
+          radius={500}
+        ></Circle>
+        <Marker
+          position={position}
+          draggable={draggable}
+          eventHandlers={{
+            click() {
+              setDraggable(true);
+            },
+          }}
+        >
+          <Popup>
+            ${position.lat} , ${position.lng}
+          </Popup>
+        </Marker>
+      </>
+    ) : null;
+  };
+
   return (
     <div className="">
       <MapContainer
@@ -161,7 +228,9 @@ const MapWrapper = () => {
         scrollWheelZoom={false}
       >
         <TileLayer {...tileLayer} />
-
+        {/* click on second icon in the bottom , you see a marker ,if you click on it ,you can move it  & select your desired coordination */}
+        <Location />
+        {/* your can see your current location same as google marker , when page is loaded. */}
         <LocationButton map={map} />
       </MapContainer>
     </div>

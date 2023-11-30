@@ -1,10 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { setUser } from "../store/user/user.reducer";
 
-import { setProduct } from "../store/product/product.reducer";
-import ProductsJson from "../utils/products.json";
-// I know we can do this more simple ,but basically we have apis in the project ,so using hook fir every requst is better options
-const useRequestProduct = () => {
+//we didn't login ,so we fill with fake data for user
+const useRequestUser = () => {
   const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
@@ -12,7 +11,13 @@ const useRequestProduct = () => {
   const sendRequest = useCallback(() => {
     setLoading(false);
     setError(null);
-    dispatch(setProduct(ProductsJson));
+    dispatch(
+      setUser({
+        name: "Soodabeh taherpanah",
+        email: "sudytaher@gmil.com",
+        adress: "",
+      })
+    );
   }, []);
   useEffect(() => {
     sendRequest();
@@ -25,4 +30,4 @@ const useRequestProduct = () => {
   };
 };
 
-export default useRequestProduct;
+export default useRequestUser;

@@ -1,12 +1,17 @@
 import { FC } from "react";
 import { DirectoryCategory } from "../../utils/common.type";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import { updateProduct } from "../../store/user/user.reducer";
+import { useDispatch } from "react-redux";
 
 type DirectoryItemProps = {
   categoryItem: DirectoryCategory;
 };
 
 const Item: FC<DirectoryItemProps> = ({ categoryItem }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { images, title, category, price } = categoryItem;
 
   return (
@@ -24,9 +29,24 @@ const Item: FC<DirectoryItemProps> = ({ categoryItem }) => {
         <label className="card-subtitle text-center">{price}</label>
 
         <div className="d-grid gap-2 mt-2">
-          <Link className="btn btn-outline-dark" to="/modal">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              dispatch(
+                updateProduct({
+                  title: title,
+                  price: price,
+                  image: images[0],
+                })
+              );
+              navigate("/modal");
+            }}
+          >
             Buy
-          </Link>
+          </Button>
+          {/* <Link className="btn btn-outline-dark" to="/modal">
+            Buy
+          </Link> */}
         </div>
       </div>
     </div>
