@@ -13,7 +13,7 @@ const useRequestProduct = () => {
     setLoading(false);
     setError(null);
     dispatch(setProduct(ProductsJson));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     sendRequest();

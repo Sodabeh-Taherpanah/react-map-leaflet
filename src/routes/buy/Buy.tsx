@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 import { SocketContext } from "../../context/SocketContext";
-import { useNavigate } from "react-router-dom";
 
 export const Buy = () => {
   const { socket, lastMessage } = useContext(SocketContext);
@@ -12,12 +11,12 @@ export const Buy = () => {
   const userData = useSelector((state: any) => state.user.userInfo);
   const userProduct = useSelector((state: any) => state.user.userProduct);
 
-  const [user, setUser] = useState(userData);
+  const [user, setUser] = useState();
   //for refreshing page in browser ,best practice is <meta http-equiv="refresh" content="30"> or  window.location.reload(); after 3o sec  when we have api ,but now just we can use interval
 
   useEffect(() => {
     setUser(userData);
-  }, userData);
+  }, [userData]);
 
   const sendMessage = () => {
     socket.emit("ordered");

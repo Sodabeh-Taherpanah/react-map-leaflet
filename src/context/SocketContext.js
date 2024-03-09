@@ -7,9 +7,9 @@ const socket = io("ws://localhost:8080/", {});
 export const SocketProvider = ({ children }) => {
   const [isConnected, setConnected] = useState(false);
   const [lastMessage, setLastMessage] = useState(null);
-  let interval;
 
   useEffect(() => {
+    let interval;
     socket.on("connect", () => {
       if (!isConnected) setConnected(true);
     });
