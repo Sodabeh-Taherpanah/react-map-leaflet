@@ -14,6 +14,7 @@ const useRequestProduct = () => {
     setError(null);
     dispatch(setProduct(ProductsJson));
   }, []);
+
   useEffect(() => {
     sendRequest();
   }, [sendRequest]);

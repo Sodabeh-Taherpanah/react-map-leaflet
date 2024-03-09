@@ -4,13 +4,10 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 import { SocketContext } from "../../context/SocketContext";
-import useRequestUser from "../../hook/useReuestUser";
 import { useNavigate } from "react-router-dom";
 
 export const Buy = () => {
   const { socket, lastMessage } = useContext(SocketContext);
-  const [status, setStatus] = useState();
-  const { loading, error } = useRequestUser();
 
   const userData = useSelector((state: any) => state.user.userInfo);
   const userProduct = useSelector((state: any) => state.user.userProduct);

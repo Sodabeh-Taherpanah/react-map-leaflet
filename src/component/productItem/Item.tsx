@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { DirectoryCategory } from "../../utils/common.type";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { updateProduct } from "../../store/user/user.reducer";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ type DirectoryItemProps = {
 const Item: FC<DirectoryItemProps> = ({ categoryItem }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { images, title, category, price } = categoryItem;
+  const { images, title, price } = categoryItem;
 
   return (
     <div className="col">

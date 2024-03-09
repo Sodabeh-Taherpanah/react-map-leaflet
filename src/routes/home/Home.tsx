@@ -1,4 +1,4 @@
-import { useNavigate, Link, useLocation, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import Product from "../../component/product/product";
@@ -6,18 +6,9 @@ import useRequestProduct from "../../hook/useRequestProduct";
 import { useSelector } from "react-redux";
 import { getCategories } from "../../store/product/product.selector";
 export const Home = () => {
-  const navigate = useNavigate();
-  const routeChange = () => {
-    let path = `/modal`;
-    navigate(path);
-  };
-
-  const [key, setKey] = useState("products");
-
-  const { loading, error } = useRequestProduct();
+  const { loading } = useRequestProduct();
   const ProductData = useSelector((state: any) => state.product.listProduct);
   const categories = useSelector(getCategories);
-
   const [product, setProduct] = useState(ProductData);
 
   useEffect(() => {
@@ -36,11 +27,7 @@ export const Home = () => {
     }
 
     return (
-      <li
-        className="list-group-item"
-        // className={active ? "active-stock-item" : "stock-item" }
-        onClick={onSelfClick}
-      >
+      <li className="list-group-item" onClick={onSelfClick}>
         {category}
       </li>
     );

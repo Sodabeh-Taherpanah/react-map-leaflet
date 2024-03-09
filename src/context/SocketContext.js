@@ -11,7 +11,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      setConnected(true);
+      if (!isConnected) setConnected(true);
     });
     socket.on("disconnect", () => {
       setConnected(false);
