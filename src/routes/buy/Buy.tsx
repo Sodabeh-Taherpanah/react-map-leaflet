@@ -13,17 +13,11 @@ export const Buy = () => {
   const userProduct = useSelector((state: any) => state.user.userProduct);
 
   const [user, setUser] = useState(userData);
-  const [product, setuserProduct] = useState(userProduct);
-  const navigate = useNavigate();
   //for refreshing page in browser ,best practice is <meta http-equiv="refresh" content="30"> or  window.location.reload(); after 3o sec  when we have api ,but now just we can use interval
 
   useEffect(() => {
     setUser(userData);
   }, userData);
-
-  useEffect(() => {
-    setuserProduct(userProduct);
-  }, userProduct);
 
   const sendMessage = () => {
     socket.emit("ordered");

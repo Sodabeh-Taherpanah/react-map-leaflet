@@ -1,11 +1,8 @@
-import PropTypes from "prop-types";
-import React, { Component } from "react";
+import React from "react";
 
 // import Modal from 'react-modal';
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
-import reportWebVitals from "./reportWebVitals";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
