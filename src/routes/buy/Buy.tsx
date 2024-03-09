@@ -11,7 +11,7 @@ export const Buy = () => {
   const userData = useSelector((state: any) => state.user.userInfo);
   const userProduct = useSelector((state: any) => state.user.userProduct);
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(userData);
   //for refreshing page in browser ,best practice is <meta http-equiv="refresh" content="30"> or  window.location.reload(); after 3o sec  when we have api ,but now just we can use interval
 
   useEffect(() => {
@@ -44,9 +44,15 @@ export const Buy = () => {
           marginLeft: 30,
         }}
       >
-        <label className="card-subtitle mt-4">Name: {user?.name}</label>
-        <label className="card-subtitle mt-4">Email: {user?.email}</label>
-        <label className="card-subtitle mt-4">Address: {user?.address}</label>
+        {user !== undefined && (
+          <div>
+            <label className="card-subtitle mt-4">Name: {user?.name}</label>
+            <label className="card-subtitle mt-4">Email: {user?.email}</label>
+            <label className="card-subtitle mt-4">
+              Address: {user?.address}
+            </label>
+          </div>
+        )}
         <Button
           style={{
             width: "28rem",
