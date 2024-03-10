@@ -32,7 +32,7 @@ export const SocketProvider = ({ children }) => {
       socket.off("message");
       if (interval) clearInterval(interval);
     };
-  }, []);
+  }, [isConnected]);
 
   return (
     <SocketContext.Provider
